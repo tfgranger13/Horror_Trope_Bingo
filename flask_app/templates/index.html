@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horror Trope Bingo</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">Registration</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/success">Registered Users</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/tropes">Tropes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/game">Play A Game</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/">
+                        {%if not 'user_id' in session:%}
+                        Not logged in
+                        {%endif%}
+                        {%if 'user_id' in session:%}
+                        Logged in as: {{session['user_name']}}
+                        {%endif%}
+                    </a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0" action="/log_out">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Log Out</button>
+            </form>
+        </div>
+    </nav>
+
+    <main>
+        <div class="container">
+            <h1>Welcome to the website!</h1>
+            <p>If this is your first time here, please register before continuing. If you are a returning user, welcome
+                back! Please log in.</p>
+
+            {% with errors = get_flashed_messages(category_filter=["logging"]) %}
+            {% if errors %}
+            <div class="alert-message block-message error">
+                <ul>
+                    {%- for msg in errors %}
+                    <li>{{ msg }}</li>
+                    {% endfor -%}
+                </ul>
+            </div>
+            {% endif %}
+            {% endwith %}
+
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <h2>Register</h2>
+
+
+                        <form action="/register" method="POST">
+
+                            <!-- form for first name -->
+                            <div class="form-group">
+                                {% with errors = get_flashed_messages(category_filter=["first_name"]) %}
+                                {% if errors %}
+                                <div class="alert-message block-message error">
+                                    <ul>
+                                        {%- for msg in errors %}
+                                        <li>{{ msg }}</li>
+                                        {% endfor -%}
+                                    </ul>
+                                </div>
+                                {% endif %}
+                                {% endwith %}
+                                <label for="reg_first_name">First Name:</label>
+                                <input type="text" class="form-control" id="reg_first_name" aria-describedby="emailHelp"
+                                    name="reg_first_name">
+                                <small id="reg_first_name_Help" class="form-text text-muted">Must be between two and 45
+                                    characters, letters only.</small>
+                            </div>
+
+                            <!-- form for last name -->
+                            <div class="form-group">
+                                {% with errors = get_flashed_messages(category_filter=["last_name"]) %}
+                                {% if errors %}
+                                <div class="alert-message block-message error">
+                                    <ul>
+                                        {%- for msg in errors %}
+                                        <li>{{ msg }}</li>
+                                        {% endfor -%}
+                                    </ul>
+                                </div>
+                                {% endif %}
+                                {% endwith %}
+                                <label for="reg_last_name">Last Name:</label>
+                                <input type="text" class="form-control" id="reg_last_name" aria-describedby="emailHelp"
+                                    name="reg_last_name">
+                                <small id="reg_last_name_Help" class="form-text text-muted">Must be between two and 45
+                                    characters, letters only.</small>
+                            </div>
+
+                            <!-- form for email -->
+                            <div class="form-group">
+                                {% with errors = get_flashed_messages(category_filter=["email"]) %}
+                                {% if errors %}
+                                <div class="alert-message block-message error">
+                                    <ul>
+                                        {%- for msg in errors %}
+                                        <li>{{ msg }}</li>
+                                        {% endfor -%}
+                                    </ul>
+                                </div>
+                                {% endif %}
+                                {% endwith %}
+                                <label for="reg_email">Email address:</label>
+                                <input type="email" class="form-control" id="reg_email" aria-describedby="emailHelp"
+                                    name="reg_email">
+                                <small id="emailHelp" class="form-text text-muted">Must be formatted correctly and
+                                    contain between five and 255 characters.</small>
+                            </div>
+
+                            <!-- form for password -->
+                            <div class="form-group">
+                                {% with errors = get_flashed_messages(category_filter=["password"]) %}
+                                {% if errors %}
+                                <div class="alert-message block-message error">
+                                    <ul>
+                                        {%- for msg in errors %}
+                                        <li>{{ msg }}</li>
+                                        {% endfor -%}
+                                    </ul>
+                                </div>
+                                {% endif %}
+                                {% endwith %}
+                                <label for="reg_password">Password:</label>
+                                <input type="password" class="form-control" id="reg_password" name="reg_password">
+                                <small id="emailHelp" class="form-text text-muted">Must contain between 8 and 255
+                                    characters.</small>
+                            </div>
+
+                            <!-- form for confirm password -->
+                            <div class="form-group">
+                                {% with errors = get_flashed_messages(category_filter=["confirm_password"]) %}
+                                {% if errors %}
+                                <div class="alert-message block-message error">
+                                    <ul>
+                                        {%- for msg in errors %}
+                                        <li>{{ msg }}</li>
+                                        {% endfor -%}
+                                    </ul>
+                                </div>
+                                {% endif %}
+                                {% endwith %}
+                                <label for="reg_confirm_password">Confirm Password:</label>
+                                <input type="password" class="form-control" id="reg_confirm_password"
+                                    name="reg_confirm_password">
+                                <small id="emailHelp" class="form-text text-muted">Must match the password entered above.</small>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Submit</button>
+
+                        </form>
+                    </div>
+                    <div class="col">
+                        <h2>Log In</h2>
+                        <form action="/log_in" method="POST">
+                            <div class="form-group">
+                                <label for="login_email">Email Address:</label>
+                                <input type="email" class="form-control" id="login_email" aria-describedby="emailHelp"
+                                    name="login_email">
+                                <small id="emailHelp" class="form-text text-muted">We'll never share your email with
+                                    anyone else. Promise.</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="login_password">Password:</label>
+                                <input type="password" class="form-control" id="login_password" name="login_password">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

@@ -1,0 +1,11 @@
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto auto auto;
+    justify-content: space-evenly;
+    height: 100%;
+    align-content: space-evenly;
+}
+
+.grid-item {
+    background: white;
+}
