@@ -5,6 +5,9 @@ from flask_app.models.trope import Trope
 #route to show tropes page
 @app.route('/tropes')
 def tropes():
+    if 'user_id' not in session:
+        flash("I'm sorry, you must be logged in to view that page.", "logging")
+        return redirect('/')
     all_tropes = Trope.get_all_tropes()
     return render_template('tropes.html', all_tropes = all_tropes)
 
@@ -23,5 +26,8 @@ def create_trope():
 #route to board page
 @app.route('/game')
 def game():
+    if 'user_id' not in session:
+        flash("I'm sorry, you must be logged in to view that page.", "logging")
+        return redirect('/')
     random_tropes = Trope.get_random_tropes()
     return render_template('game.html', random_tropes = random_tropes)
