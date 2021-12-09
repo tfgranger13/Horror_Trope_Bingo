@@ -64,11 +64,11 @@
             {% endwith %}
             {% block body %}{% endblock %}
 
-            <!-- Form to Submit a Trope -->
+            <!-- Form to Update a Trope -->
             <div>
-                <h2>Submit a Trope!</h2>
+                <h2>Update a Trope!</h2>
 
-                <form action="/new_trope" method="POST">
+                <form action="/update_trope/{{trope_info.id}}" method="POST">
 
                     <!-- form for content -->
                     <div class="form-group">
@@ -83,10 +83,10 @@
                         </div>
                         {% endif %}
                         {% endwith %}
-                        <label for="new_trope_content">Content:</label>
-                        <input type="text" class="form-control" id="new_trope_content"
-                            aria-describedby="new_trope_content_Help" name="new_trope_content">
-                        <small id="new_trope_content_Help" class="form-text text-muted">Max 255 characters.</small>
+                        <label for="edit_trope_content">Content:</label>
+                        <input type="text" class="form-control" id="edit_trope_content"
+                            aria-describedby="edit_trope_content_Help" name="edit_trope_content">
+                        <small id="edit_trope_content_Help" class="form-text text-muted">Max 255 characters.</small>
                     </div>
 
                     <button type="submit" class="btn btn-primary">Submit</button>
@@ -94,29 +94,7 @@
                 </form>
             </div>
 
-            <!-- List of Current Tropes -->
-            <div>
-                <h2>Current Tropes:</h2>
-
-                <table class="table table-dark">
-                    <thead>
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Content</th>
-                            <th scope="col">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {%for trope in all_tropes%}
-                        <tr>
-                            <th scope="row">{{trope.id}}</th>
-                            <td>{{trope.content}}</td>
-                            <td><a href="edit_tropes/{{trope.id}}">Edit</a>  |  <a href="/tropes/delete/{{trope.id}}">Delete</a></td>
-                        </tr>
-                        {%endfor%}
-                    </tbody>
-                </table>
-            </div>
+            
         </div>
     </main>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

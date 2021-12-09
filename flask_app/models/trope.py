@@ -46,16 +46,24 @@ class Trope:
         results = connectToMySQL('htb_schema').query_db(query, data)
         return results
 
+    #method to update trope in db
+    @classmethod
+    def update_trope(cls, data):
+        query = "UPDATE tropes SET content = %(content)s WHERE id = %(id)s AND user_id = %(user_id)s;"
+        results = connectToMySQL('htb_schema').query_db(query, data)
+        return results
+
+        
+
     #TODO method to flag trope with an issue
     @classmethod
     def flag_in_db(cls, data):
-        query = "INSERT INTO tropes (content, user_id) VALUES (%(content)s, %(user_id)s);"
+        query = "UPDATE tropes SET is_flagged = 1 WHERE id = %(id)s AND user_id = %(user_id)s;"
         results = connectToMySQL('htb_schema').query_db(query, data)
         return results
 
     #TODO method to delete trope from db
     @classmethod
-    def add_to_db(cls, data):
-        query = "INSERT INTO tropes (content, is_flagged, user_id) VALUES (%(content)s, %(is_flagged)s, %(user_id)s);"
+    def delete_from_db(cls, data):
+        query = "DELETE FROM tropes WHERE user_id = %(user_id)s AND id = %(id)s;"
         results = connectToMySQL('htb_schema').query_db(query, data)
-        return results

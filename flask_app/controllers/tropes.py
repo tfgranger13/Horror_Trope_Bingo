@@ -20,7 +20,7 @@ def create_trope():
         'user_id': session['user_id']
     }
     trope_id = Trope.add_to_db(data)
-    flash('Trope added successfully!', 'trope')
+    flash('Trope successfully added!', 'trope')
     return redirect('/tropes')
 
 #route to board page
@@ -30,4 +30,46 @@ def game():
         flash("I'm sorry, you must be logged in to view that page.", "logging")
         return redirect('/')
     random_tropes = Trope.get_random_tropes()
+    if len(random_tropes) < 24:
+        flash("I'm sorry, you must add more tropes to play a game.", "tropes")
+        return redirect('/tropes')
     return render_template('game.html', random_tropes = random_tropes)
+
+#route to edit trope
+@app.route('/edit_tropes/<int:trope_id>')
+def render_edit_trope(trope_id):
+    data = {
+        'id': trope_id,
+        'user_id': session['user_id']
+    }
+    trope_info = Trope.get_single_trope(data)
+    return render_template("update.html", trope_info = trope_info)
+
+
+
+
+#route to submit edit
+@app.route('/update_trope/<int:trope_id>', methods = ['POST'])
+def submit_edit_trope(trope_id):
+    if 'user_id' not in session:
+        flash("I'm sorry, you must be logged in to view that page.", "logging")
+        return redirect('/')
+    data = {
+        'id': trope_id,
+        'content': request.form['edit_trope_content'],
+        'user_id': session['user_id']
+    }
+    Trope.update_trope(data)
+    flash("Trope successfully updated!", 'trope')
+    return redirect('/tropes')
+
+#route to delete trope
+@app.route('/tropes/delete/<int:trope_id>')
+def delete_trope_from_db(trope_id):
+    data = {
+        'id': trope_id,
+        'user_id': session['user_id']
+    }
+    Trope.delete_from_db(data)
+    flash("Trope has been removed.", "trope")
+    return redirect('/tropes')
