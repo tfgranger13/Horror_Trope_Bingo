@@ -84,7 +84,7 @@
                         {% endif %}
                         {% endwith %}
                         <label for="edit_trope_content">Content:</label>
-                        <input type="text" class="form-control" id="edit_trope_content"
+                        <input type="text" class="form-control" id="edit_trope_content" value="{{trope_info.content}}"
                             aria-describedby="edit_trope_content_Help" name="edit_trope_content">
                         <small id="edit_trope_content_Help" class="form-text text-muted">Max 255 characters.</small>
                     </div>
@@ -92,6 +92,9 @@
                     <button type="submit" class="btn btn-primary">Submit</button>
 
                 </form>
+                <a href="/tropes">
+                    <button class="btn btn-secondary">Cancel</button>
+                </a>
             </div>
 
             
