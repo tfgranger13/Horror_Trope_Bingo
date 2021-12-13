@@ -56,8 +56,7 @@ def submit_edit_trope(trope_id):
         return redirect('/')
     data = {
         'id': trope_id,
-        'content': request.form['edit_trope_content'],
-        'user_id': session['user_id']
+        'content': request.form['edit_trope_content']
     }
     Trope.update_trope(data)
     flash("Trope successfully updated!", 'trope')

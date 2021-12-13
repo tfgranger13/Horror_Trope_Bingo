@@ -49,7 +49,7 @@ class Trope:
     #method to update trope in db
     @classmethod
     def update_trope(cls, data):
-        query = "UPDATE tropes SET content = %(content)s WHERE id = %(id)s AND user_id = %(user_id)s;"
+        query = "UPDATE tropes SET content = %(content)s WHERE id = %(id)s;"
         results = connectToMySQL('htb_schema').query_db(query, data)
         return results
 
@@ -58,7 +58,7 @@ class Trope:
     #TODO method to flag trope with an issue
     @classmethod
     def flag_in_db(cls, data):
-        query = "UPDATE tropes SET is_flagged = 1 WHERE id = %(id)s AND user_id = %(user_id)s;"
+        query = "UPDATE tropes SET is_flagged = 1 WHERE id = %(id)s;"
         results = connectToMySQL('htb_schema').query_db(query, data)
         return results
 
