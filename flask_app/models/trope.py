@@ -53,7 +53,21 @@ class Trope:
         results = connectToMySQL('htb_schema').query_db(query, data)
         return results
 
-        
+    #TODO: method to search for a trope
+    @classmethod
+    def searchTropes(cls, data):
+
+        # query = "SET @search = %(search)s; SELECT * FROM tropes WHERE content LIKE CONCAT("%",@search,"%");"
+        # query = "SET @search = %(search)s; SELECT * FROM tropes WHERE content LIKE "%"+@search+"%";"
+        # query = "SELECT * FROM tropes WHERE content LIKE CONCAT('%', %(search)s, '%');"
+        # query = "SELECT * FROM tropes WHERE content LIKE %(search)s;"
+        # query = 'SELECT * FROM tropes WHERE content LIKE CONCAT(%(search)s,"%");'
+        # query = "SELECT * FROM tropes WHERE content LIKE "%"+%(search)s+"%";"
+
+        # works for isolated words, need to run ALTER TABLE tropes ADD FULLTEXT(content); before search will work
+        query = "SELECT * FROM tropes WHERE MATCH (content) AGAINST (%(search)s IN BOOLEAN MODE);"
+        results = connectToMySQL('htb_schema').query_db(query, data)
+        return results
 
     #TODO method to flag trope with an issue
     @classmethod
@@ -62,7 +76,7 @@ class Trope:
         results = connectToMySQL('htb_schema').query_db(query, data)
         return results
 
-    #TODO method to delete trope from db
+    #method to delete trope from db
     @classmethod
     def delete_from_db(cls, data):
         query = "DELETE FROM tropes WHERE user_id = %(user_id)s AND id = %(id)s;"
