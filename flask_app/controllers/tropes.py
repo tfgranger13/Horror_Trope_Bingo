@@ -27,7 +27,7 @@ def tropes():
     all_tropes = Trope.get_all_tropes()
     return render_template('tropes.html', all_tropes = all_tropes)
 
-#TODO: route for search query
+#route for search query
 @app.route('/search_tropes', methods = ['POST'])
 def searchQuery():
     if 'user_id' not in session:
@@ -63,8 +63,7 @@ def game():
 @app.route('/edit_tropes/<int:trope_id>')
 def render_edit_trope(trope_id):
     data = {
-        'id': trope_id,
-        'user_id': session['user_id']
+        'id': trope_id
     }
     trope_info = Trope.get_single_trope(data)
     return render_template("update.html", trope_info = trope_info)
@@ -91,8 +90,7 @@ def submit_edit_trope(trope_id):
 @app.route('/tropes/delete/<int:trope_id>')
 def delete_trope_from_db(trope_id):
     data = {
-        'id': trope_id,
-        'user_id': session['user_id']
+        'id': trope_id
     }
     Trope.delete_from_db(data)
     flash("Trope has been removed.", "trope")

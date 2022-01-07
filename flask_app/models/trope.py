@@ -79,5 +79,5 @@ class Trope:
     #method to delete trope from db
     @classmethod
     def delete_from_db(cls, data):
-        query = "DELETE FROM tropes WHERE user_id = %(user_id)s AND id = %(id)s;"
+        query = "DELETE FROM tropes WHERE id = %(id)s;"
         results = connectToMySQL('htb_schema').query_db(query, data)
