@@ -47,9 +47,9 @@ def searchQuery():
 #route to board page
 @app.route('/game')
 def game():
-    if 'user_id' not in session:
-        flash("I'm sorry, you must be logged in to view that page.", "logging")
-        return redirect('/')
+    # if 'user_id' not in session:
+    #     flash("I'm sorry, you must be logged in to view that page.", "logging")
+    #     return redirect('/')
     random_tropes = Trope.get_random_tropes()
     if len(random_tropes) < 24:
         flash("I'm sorry, you must add more tropes to play a game.", "tropes")

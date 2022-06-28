@@ -8,7 +8,7 @@ bcrypt = Bcrypt(app)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return redirect('/game')
 
 #route to register a new user
 @app.route('/register', methods = ['POST'])
